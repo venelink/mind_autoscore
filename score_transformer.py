@@ -38,6 +38,7 @@ from sklearn.metrics import accuracy_score
 import sys
 import argparse
 from pathvalidate import sanitize_filepath
+import time
 
 ## Custom imports
 sys.path.append('Import/')
@@ -85,8 +86,8 @@ if __name__ == "__main__":
 
     # Pass arguments to variables
     # Sanitize input to avoid funny business
-    model_path = sanitize_filepath(args.Model)
-    csv_path = sanitize_filepath(args.CSV)
+    model_path = model_dir + sanitize_filepath(args.Model)
+    csv_path = input_dir + sanitize_filepath(args.CSV)
       
     # Load transformer with predefined parameters
     # path to model, X columns, age range, max len
@@ -106,9 +107,11 @@ if __name__ == "__main__":
     scored_df = tr_cls.mr_score_data(qa_dataset)
     
     # Reformat the dataframe to mix all the questions
-    # 
     processed_df = out_mind_tr(scored_df, misc_cols, text_cols)
 
-    processed_df.to_csv('Scored/sample.csv',index=False)
+    # Save the processed file
+    # Processing folder is in the config
+    out_fpath = out_dir + "processed_" + time.strftime("%Y%m%d-%H%M%S") + ".csv"
+    processed_df.to_csv(out_fpath,index=False)
 
 #print(processed_df)
