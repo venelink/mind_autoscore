@@ -35,4 +35,10 @@ r_ages = [8,9,10,11,12,13]
 m_r_len = 35
 
 # Path to input
-out_path = 'Scored/'
+input_dir = 'Raw_Data/'
+
+# Path to models
+model_dir = 'Models/'
+
+# Path to output
+out_dir = 'Scored/'
