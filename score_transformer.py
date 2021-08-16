@@ -99,7 +99,7 @@ if __name__ == "__main__":
     raw_data = mr_read_new_data(csv_path,text_cols)
     
     # Split the data per questions, needed for the ML alg
-    # raw data; X columns, Y columns, Other columns to keep, list of Qs
+    # raw data; X columns, other columns to keep, list of Qs
     qa_dataset = mr_create_qa_data(raw_data,text_cols,misc_cols,questions)
 
 
