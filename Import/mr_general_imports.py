@@ -105,7 +105,67 @@ def mr_create_qa_data(full_df, X_cols, misc_cols, list_qs, drop_na=True):
         cur_df.rename(columns={cur_X:'Answer'},inplace=True)
         
         # Add the question to the answer -> improves performance
-        cur_df['Answer'] = cur_q + cur_df['Answer'].astype(str)
+        cur_df['Answer'] = cur_q + " " + cur_df['Answer'].astype(str)
+
+        # Put the data in the list
+        q_datasets.append(cur_df)
+
+    # Get a full dataset with all the data
+    # In this version of the code we don't keep the separate datasets per
+    # question - it is not necessary
+    full_dataset = pd.concat(q_datasets)
+
+    # Return the full dataset
+    return(full_dataset)
+
+# Function for splitting input per question (expected ML format)
+# Expected input:
+# full_df - the original dataset
+# X_cols - column names of X values
+# y_cols - column names of Y values
+# misc_cols - other column names that need to be kept
+# list_qs - list of questions corresponding to X_cols
+# drop_na - whether to drop missing columns or not
+def mr_create_qa_train_data(full_df, X_cols, y_cols, misc_cols, list_qs, drop_na=True):
+    
+    # Initialize a list of datasets
+    q_datasets = []
+
+    # Loop through all answer / value pairs
+    for cur_X, cur_y, cur_q in zip(X_cols, y_cols, list_qs):
+        
+        # List of columns to keep - misc + current X
+        cols_to_keep = misc_cols + [cur_X] + [cur_y]
+        
+        # Get the data
+        cur_df = full_df[cols_to_keep].copy()
+        
+   
+        # Drop missing data and -99s
+        # N.B.: this might result in minor difference between input/output (!)
+        # It is generally recommended nevertheless
+        if drop_na:
+            cur_df[cur_X].replace('', np.nan, inplace=True)
+            cur_df[cur_y].replace(-99, np.nan, inplace=True)
+            cur_df.loc[:,misc_cols].fillna('-99',inplace=True)
+            cur_df.dropna(inplace=True)
+        # If we want to keep data integrity
+        else:
+            cur_df[cur_X].replace('', '-99', inplace=True)
+            cur_df.fillna('-99',inplace=True)
+            
+        
+        # Add column for the current question (this is needed later on)
+        # Since we rename all X columns to "answer", we need to keep track
+        # of the original question
+        cur_df["Question"] = cur_X
+        
+        # Rename columns for consistency
+        cur_df.rename(columns={cur_X:'Answer'},inplace=True)
+        cur_df.rename(columns={cur_y:'Score'},inplace=True)
+        
+        # Add the question to the answer -> improves performance
+        cur_df['Answer'] = cur_q + " " + cur_df['Answer'].astype(str)
 
         # Put the data in the list
         q_datasets.append(cur_df)
