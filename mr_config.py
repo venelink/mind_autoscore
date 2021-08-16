@@ -42,3 +42,13 @@ model_dir = 'Models/'
 
 # Path to output
 out_dir = 'Scored/'
+
+# Path to training data
+train_input_dir = "Train_Data/"
+
+# Path to save re-trained models
+save_model_dir = "Custom_Models/"
+
+# Parameters for evaluation, whether to print evaluation by Question and Age
+EvalQ = True
+EvalAge = False
