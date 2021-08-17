@@ -20,7 +20,9 @@ rate_cols = ['SFQ1_Rating', 'SFQ2_Rating', 'SFQ3_Rating',
              'SS_Simon_Rating', 'SS_Burglar_Rating']
 
 # Other columns
-misc_cols = ['ID', 'CID', 'Gender', 'AgeR', 'AgeG', 'AgeGroup', 'MHVS', 'SEND']
+# Commented line - example in case we want to control for more variables
+#misc_cols = ['ID', 'CID', 'Gender', 'AgeR', 'AgeG', 'AgeGroup', 'MHVS', 'SEND']
+misc_cols = ['ID']
 
 # Add the questions
 questions = ['Why did the men hide ? ', 'What does the woman think ? ', 'Why did the driver lock Harold in the van ? ', 
