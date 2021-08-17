@@ -14,37 +14,33 @@ import gensim
 import glob
 import csv
 import sklearn
-from sklearn.model_selection import cross_val_score
-import sklearn.model_selection
-import sklearn.pipeline
 import re
-from sklearn import svm
-from sklearn import *
-from sklearn.feature_selection import SelectKBest, VarianceThreshold
+from sklearn.model_selection import LeaveOneOut,KFold,train_test_split,cross_val_score
 from sklearn.feature_selection import chi2
-from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.utils import shuffle
+from sklearn.metrics import accuracy_score
 from scipy import sparse
 import tensorflow_datasets as tfds
 import tensorflow as tf
 import collections
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from sklearn.model_selection import LeaveOneOut,KFold,train_test_split
-import ktrain
-from ktrain import text
-from sklearn.metrics import accuracy_score
 import sys
 import argparse
 from pathvalidate import sanitize_filepath
 import time
 
+import transformers
+from transformers import BertTokenizer, BertModel, BertForSequenceClassification, TFBertForSequenceClassification, DistilBertTokenizer, TFDistilBertForSequenceClassification
+
+
 ## Custom imports
 sys.path.append('Import/')
 from mr_general_imports import *
-from mr_cls_Transformer import *
+from mr_cls_HF_Transformer_Train import *
 
 # Import config
-#from mr_train_config import *
+from mr_config import *
  
 # Program body
 if __name__ == "__main__":
@@ -53,7 +49,7 @@ if __name__ == "__main__":
 
     # Add the arguments
     my_parser.add_argument('Action',
-                           metavar='train_file',
+                           metavar='cur_action',
                            type=str,
                            help='Action - either "eval" or "train"')    
     
@@ -84,18 +80,18 @@ if __name__ == "__main__":
     
     # Load raw data for training
     # Path to csv; X columns
-    raw_data = mr_read_new_data(csv_path,text_cols)
+    raw_data = mr_read_new_data(train_path,text_cols)
 
     # Split the data per questions, needed for the ML alg
     # raw data; X columns, Y columns, Other columns to keep, list of Qs
     qa_dataset = mr_create_qa_train_data(raw_data,text_cols,rate_cols,misc_cols,questions)
     
     # create a new transformer, take variables from config
-    tr_cls = MR_transformer(col_names,age_list,labels,max_len)
+    tr_cls = MR_transformer(text_cols,r_ages,[0,1,2],m_r_len)
     tr_cls.mr_set_eval_vars(EvalQ,EvalAge,False)
     
     if args.Action.lower() == "eval":
-        tr_cls.mr_one_train_test(cur_df,0.2)
+        tr_cls.mr_one_train_test(qa_dataset,0.2)
     else:
-        tr_cls.mr_train(cur_df)
-        tr_cls.save_model(save_path)
+        tr_cls.mr_train(qa_dataset)
+        tr_cls.mr_save_model(save_path)

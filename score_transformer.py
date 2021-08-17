@@ -6,7 +6,6 @@ Created on Wed Jul 21 13:02:13 2021
 """
 
 ## Import section
-
 import pandas as pd
 import numpy as np
 import scipy
@@ -16,34 +15,30 @@ import gensim
 import glob
 import csv
 import sklearn
-from sklearn.model_selection import cross_val_score
-import sklearn.model_selection
-import sklearn.pipeline
 import re
-from sklearn import svm
-from sklearn import *
-from sklearn.feature_selection import SelectKBest, VarianceThreshold
+from sklearn.model_selection import LeaveOneOut,KFold,train_test_split,cross_val_score
 from sklearn.feature_selection import chi2
-from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.utils import shuffle
+from sklearn.metrics import accuracy_score
 from scipy import sparse
 import tensorflow_datasets as tfds
 import tensorflow as tf
 import collections
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from sklearn.model_selection import LeaveOneOut,KFold,train_test_split
-import ktrain
-from ktrain import text
-from sklearn.metrics import accuracy_score
 import sys
 import argparse
 from pathvalidate import sanitize_filepath
 import time
 
+import transformers
+from transformers import BertTokenizer, BertModel, BertForSequenceClassification, TFBertForSequenceClassification, DistilBertTokenizer, TFDistilBertForSequenceClassification
+
+
 ## Custom imports
 sys.path.append('Import/')
 from mr_general_imports import *
-from mr_cls_Transformer import *
+from mr_cls_HF_Transformer import *
 
 # Import config
 from mr_config import *
