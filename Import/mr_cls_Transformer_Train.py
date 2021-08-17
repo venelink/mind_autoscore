@@ -19,28 +19,34 @@ import spacy
 import glob
 import csv
 import sklearn
-from sklearn.model_selection import cross_val_score
-import sklearn.model_selection
-import sklearn.pipeline
-import re
-from sklearn import svm
-from sklearn import *
-from sklearn.feature_selection import SelectKBest, VarianceThreshold
+
+from sklearn.model_selection import LeaveOneOut,KFold,train_test_split,cross_val_score
 from sklearn.feature_selection import chi2
-from sklearn.model_selection import KFold
-from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.utils import shuffle
+from sklearn.metrics import accuracy_score
+
+#from sklearn.model_selection import cross_val_score
+#import sklearn.model_selection
+#import sklearn.pipeline
+#from sklearn import svm
+#from sklearn import *
+#from sklearn.feature_selection import SelectKBest, VarianceThreshold
+#from sklearn.feature_selection import chi2
+#from sklearn.model_selection import KFold
+#from sklearn.base import BaseEstimator, TransformerMixin
+#from sklearn.model_selection import LeaveOneOut,KFold,train_test_split
+#from sklearn.utils import shuffle
+
+import re
 from scipy import sparse
 import tensorflow_datasets as tfds
 import tensorflow as tf
 import collections
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from sklearn.model_selection import LeaveOneOut,KFold,train_test_split
-from sklearn.utils import shuffle
+
 import ktrain
 from ktrain import text
-from sklearn.metrics import accuracy_score
-
 
 # Custom imports
 # Some of those functions can probably be incorporated as methods in the class
