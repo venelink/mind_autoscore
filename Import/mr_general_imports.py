@@ -165,7 +165,7 @@ def mr_create_qa_train_data(full_df, X_cols, y_cols, misc_cols, list_qs, drop_na
         cur_df.rename(columns={cur_y:'Score'},inplace=True)
         
         # Add the question to the answer -> improves performance
-        cur_df['Answer'] = cur_q + " " + cur_df['Answer'].astype(str)
+        cur_df['Answer'] = cur_q + cur_df['Answer'].astype(str)
 
         # Put the data in the list
         q_datasets.append(cur_df)
