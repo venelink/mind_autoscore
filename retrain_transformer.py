@@ -2,7 +2,6 @@
 """
 Created on Fri Aug 13 17:54:09 2021
 
-@author: Venelin
 """
 
 import pandas as pd
@@ -35,6 +34,12 @@ from transformers import BertTokenizer, BertModel, BertForSequenceClassification
 
 
 ## Custom imports
+
+    
+# N.B. This script only works with relative files, should only be executed
+# From the folder where it's located. If you want to run it  as a script
+# Check score_transformer and make corresponding changes to paths.
+
 sys.path.append('Import/')
 from mr_general_imports import *
 from mr_cls_HF_Transformer_Train import *
