@@ -2,7 +2,6 @@
 """
 Created on Thu Jul 22 12:54:16 2021
 
-@author: Venelin
 """
 
 ## Import section

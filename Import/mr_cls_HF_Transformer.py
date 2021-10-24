@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 
-@author: Venelin Kovatchev
-
 
 Class for scoring using a HuggingFace Distilbert Transformer.
 

@@ -2,8 +2,6 @@
 """
 Created on Tue Oct  6 10:01:15 2020
 
-@author: Venelin Kovatchev
-
 
 Class for scoring using a ktrain Distilbert Transformer.
 

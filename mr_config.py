@@ -2,7 +2,6 @@
 """
 Created on Thu Jul 22 14:02:44 2021
 
-@author: Venelin
 """
 
 # Separate columns by type
