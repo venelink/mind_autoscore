@@ -2,7 +2,6 @@
 """
 Created on Wed Jul 21 13:02:13 2021
 
-@author: Venelin
 """
 
 ## Import section
@@ -36,7 +35,17 @@ from transformers import BertTokenizer, BertModel, BertForSequenceClassification
 
 
 ## Custom imports
+
+# Set install folder and fix filepaths folder
+# Unix script full path imports
+#full_fpath = '/var/mind_autoscore/'
+#sys.path.append(full_fpath)
+#sys.path.append(full_fpath + 'Import/')
+
+# Command line imports with relative import
 sys.path.append('Import/')
+
+
 from mr_general_imports import *
 from mr_cls_HF_Transformer import *
 
@@ -63,6 +72,7 @@ def imp_mind_tr(fpath, inp_cols, age_list, m_len, y_lab = [0,1,2]):
 # Program body
 if __name__ == "__main__":
     
+    # Wrap everything in a try to have propper error code handling
     try:
     
         # Initialize argparser to process command line args
@@ -84,6 +94,12 @@ if __name__ == "__main__":
     
         # Pass arguments to variables
         # Sanitize input to avoid funny business
+
+        # Full path version for script
+        #model_path = full_fpath + model_dir + sanitize_filepath(args.Model)
+        #csv_path = full_fpath + input_dir + sanitize_filepath(args.CSV)        
+
+        # Relative path version for command line
         model_path = model_dir + sanitize_filepath(args.Model)
         csv_path = input_dir + sanitize_filepath(args.CSV)
           
@@ -109,9 +125,16 @@ if __name__ == "__main__":
     
         # Save the processed file
         # Processing folder is in the config
+        
+        # Full path version
+        # out_fpath = full_fpath + out_dir + "processed_" + sanitize_filepath(args.CSV)
+        
+        # Relative path version
         out_fpath = out_dir + "processed_" + sanitize_filepath(args.CSV)
+
         processed_df.to_csv(out_fpath,index=False)
         
+    # Propper error handling, needed for script
     except Exception as ex:
         print("Error:"+ex)
         sys.exit(1)
